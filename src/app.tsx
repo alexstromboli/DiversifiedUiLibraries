@@ -2,6 +2,7 @@ import * as React from 'react'
 import ReactDOM from 'react-dom';
 
 import { List, Data } from './data';
+import { DisplayBareHtml } from './display_barehtml';
 
 enum Mode
 {
@@ -23,7 +24,8 @@ class App extends React.Component<List, AppState>
   render ()
   {
     return [
-      <div id="left_panel" style={{float: "left", width: "300px", height: "90vh", padding: "2em", backgroundColor: "#f2f2f2"}}>
+      <div id="left_panel" style={{float: "left", width: "200px", height: "90vh", padding: "1.5em", backgroundColor: "#f2f2f2"}}>
+        <style>{"li {display: block; margin: 1em 0;} a:link, a:visited, a:hover, a:active {	color: blue; text-decoration: none; }"}</style>
         <ul>
           <li><a href="#" onClick={e => this.setState ({...this.state, current: Mode.BareHtml})}>Bare HTML</a></li>
           <li><a href="#" onClick={e => this.setState ({...this.state, current: Mode.KendoUI})}>Kendo UI</a></li>
@@ -33,25 +35,7 @@ class App extends React.Component<List, AppState>
       <div id="demo" style={{height: "100vh", overflow: "hidden", position: "relative", padding: "3em 4em"}}>
         {
           this.state.current == Mode.BareHtml
-          ?
-            [
-              <style>{"table {border:1px solid black;} table td {width: 8em}"}</style>,
-              <table>
-                  <tr>
-                    <td><b>city</b></td>
-                    <td><b>province</b></td>
-                    <td><b>population</b></td>
-                  </tr>
-                { this.props.cities.map (c =>
-                  <tr>
-                    <td>{c.name}</td>
-                    <td>{c.province}</td>
-                    <td>{c.population}</td>
-                  </tr>
-                  )
-                }
-              </table>
-            ]
+          ? <DisplayBareHtml {...this.props} />
           : <div>none</div>
         }
       </div>
