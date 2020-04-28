@@ -5,11 +5,13 @@ import { List, Data } from './data';
 
 import { DisplayBareHtml } from './display_barehtml';
 import { DisplayKendoUI } from './display_kendoui';
+import { DisplaySyncFusion } from './display_syncfusion';
 
 enum Mode
 {
   BareHtml,
-  KendoUI
+  KendoUI,
+  SyncFusion
 }
 
 class AppState
@@ -23,14 +25,22 @@ class App extends React.Component<List, AppState>
     current: Mode.BareHtml
   };
 
+  menu_link (mode: Mode, display: string)
+  {
+    return <li
+        style={{padding: "1em", backgroundColor: this.state.current == mode ? "white" : "transparent" }}
+      ><a href="#" onClick={e => {e.preventDefault(); this.setState ({...this.state, current: mode}); }}>{display}</a></li>;
+  }
+
   render ()
   {
     return [
-      <div id="left_panel" style={{float: "left", width: "200px", height: "90vh", padding: "1.5em", backgroundColor: "#f2f2f2"}}>
-        <style>{"li {display: block; margin: 1em 0;} a:link, a:visited, a:hover, a:active {	color: blue; text-decoration: none; }"}</style>
+      <div id="left_panel" style={{float: "left", width: "200px", height: "90vh", padding: "1em", backgroundColor: "#f2f2f2"}}>
+        <style>{"li {display: block;} a:link, a:visited, a:hover, a:active {	color: blue; text-decoration: none; }"}</style>
         <ul>
-          <li><a href="#" onClick={e => this.setState ({...this.state, current: Mode.BareHtml})}>Bare HTML</a></li>
-          <li><a href="#" onClick={e => this.setState ({...this.state, current: Mode.KendoUI})}>Kendo UI</a></li>
+          { this.menu_link (Mode.BareHtml, "Bare HTML") }
+          { this.menu_link (Mode.KendoUI, "Kendo UI") }
+          { this.menu_link (Mode.SyncFusion, "SyncFusion") }
         </ul>
       </div>,
     
@@ -40,6 +50,8 @@ class App extends React.Component<List, AppState>
           ? <DisplayBareHtml {...this.props} />
           : this.state.current == Mode.KendoUI
           ? <DisplayKendoUI {...this.props} />
+          : this.state.current == Mode.SyncFusion
+          ? <DisplaySyncFusion {...this.props} />
           : <div>none</div>
         }
       </div>
