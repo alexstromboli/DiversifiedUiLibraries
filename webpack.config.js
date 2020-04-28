@@ -37,6 +37,10 @@ module.exports =
 			{
 				test: /\.jsx?$/,
 				use: 'babel-loader'
+			},
+			{
+				test: /\.css$/i,
+				use: ['style-loader', 'css-loader'],
 			}
 		]
 	}

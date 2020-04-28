@@ -2,7 +2,9 @@ import * as React from 'react'
 import ReactDOM from 'react-dom';
 
 import { List, Data } from './data';
+
 import { DisplayBareHtml } from './display_barehtml';
+import { DisplayKendoUI } from './display_kendoui';
 
 enum Mode
 {
@@ -32,10 +34,12 @@ class App extends React.Component<List, AppState>
         </ul>
       </div>,
     
-      <div id="demo" style={{height: "100vh", overflow: "hidden", position: "relative", padding: "3em 4em"}}>
+      <div id="demo" style={{overflow: "hidden", padding: "3em 4em"}}>
         {
           this.state.current == Mode.BareHtml
           ? <DisplayBareHtml {...this.props} />
+          : this.state.current == Mode.KendoUI
+          ? <DisplayKendoUI {...this.props} />
           : <div>none</div>
         }
       </div>
