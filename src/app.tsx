@@ -5,7 +5,7 @@ import { List, Data } from './data';
 
 import { DisplayBareHtml } from './display_barehtml';
 import { DisplayKendoUI } from './display_kendoui';
-import { DisplaySyncFusion } from './display_syncfusion';
+const DisplaySyncFusion = React.lazy (() => import ('./display_syncfusion'));
 
 enum Mode
 {
@@ -41,7 +41,8 @@ class App extends React.Component<List, AppState>
   render ()
   {
     return [
-      <div id="left_panel" style={{float: "left", width: "150px", height: "90vh", padding: "1em", backgroundColor: "#f2f2f2"}}>
+      <div id="left_panel" key="left_panel"
+          style={{float: "left", width: "150px", height: "90vh", padding: "1em", backgroundColor: "#f2f2f2"}}>
         <style>{"ul {padding: 0} li {display: block;} a:link, a:visited, a:hover, a:active {color: blue; text-decoration: none;}"}</style>
         <ul>
           { this.menu_link (Mode.BareHtml, "Bare HTML") }
@@ -50,14 +51,14 @@ class App extends React.Component<List, AppState>
         </ul>
       </div>,
     
-      <div id="demo" style={{overflow: "hidden", padding: "3em 4em"}}>
+      <div id="demo" key="demo" style={{overflow: "hidden", padding: "3em 4em"}}>
         {
           this.state.current == Mode.BareHtml
           ? <DisplayBareHtml {...this.props} />
           : this.state.current == Mode.KendoUI
           ? <DisplayKendoUI {...this.props} />
           : this.state.current == Mode.SyncFusion
-          ? <DisplaySyncFusion {...this.props} />
+          ? <React.Suspense fallback={<div>loading...</div>}><DisplaySyncFusion {...this.props} /></React.Suspense>
           : <div>none</div>
         }
       </div>

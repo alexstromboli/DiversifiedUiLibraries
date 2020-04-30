@@ -3,6 +3,7 @@
 	{
         "jsx": "react",
         "moduleResolution": "node",
-        "target": "es2015"
+        "target": "es2015",
+        "module": "ESNext"
     }
 }

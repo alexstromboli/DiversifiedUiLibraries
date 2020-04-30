@@ -5,7 +5,7 @@ import { ColumnDirective, ColumnsDirective, GridComponent } from '@syncfusion/ej
 
 import { List } from './data';
 
-export class DisplaySyncFusion extends React.Component<List, any>
+class DisplaySyncFusion extends React.Component<List, any>
 {
   render ()
   {
@@ -19,3 +19,5 @@ export class DisplaySyncFusion extends React.Component<List, any>
       ;
   }
 }
+
+export default DisplaySyncFusion;
